@@ -1,0 +1,23 @@
+Public Class LoginForm
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
+        Dim conn As New SqlConnection
+        Dim connstring = My.MySettings.Default.Connection
+        Dim command As New SqlCommand
+        Dim rd As SqlDataReader
+        command.Connection = conn
+        conn.ConnectionString = "Data Source=BMSCW-MS-2\SQLEXPRESS;Initial Catalog=crimesys;Integrated Security=True"
+        conn.Open()
+        command.CommandText = "select * from Tablecrimesys where USERNAME='"& text1.text &"' and PASSWORD='" & text2.text & "'"
+        rd = command.ExecuteReader
+        If rd.HasRows Then
+            frmMectus.Show()
+            MessageBox.Show("login successfull")
+        Else
+            MessageBox.Show("invalid username or password")
+
+        End If
+       text1 = ""
+         text2 = ""
+        conn.Close()
+    End Sub
